@@ -5,13 +5,9 @@ import ChatHistory from './chat_history';
 import AvatarSpeak from './Avatar_speak';
 import './App.css';
 
-const openaiApiKey = "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";
 
 // Set up OpenAI w/ API Key
-const openai = new OpenAI({
-  apiKey: openaiApiKey,
-  dangerouslyAllowBrowser: true
-});
+
 
 function App() {
   const [chatGPTText, setChatGPTText] = useState<string>("");

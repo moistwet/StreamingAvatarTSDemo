@@ -32,6 +32,14 @@
   }
 }
 
+.MediaPlayer{
+  display: flex;
+  width: 800px;
+  height: 300px;
+  justify-content: space-between;
+  margin-top: 50px;
+}
+
 .Actions{
   display: flex;
   flex-direction: row;
