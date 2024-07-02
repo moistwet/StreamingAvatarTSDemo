@@ -5,8 +5,7 @@ import ChatHistory from './chat_history';
 import AvatarSpeak from './Avatar_speak';
 import './App.css';
 
-
-// Set up OpenAI w/ API Key
+// const openaiApiKey = "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";
 
 
 function App() {
