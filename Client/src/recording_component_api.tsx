@@ -63,11 +63,19 @@ const useSpeechRecognition = (onTranscriptionComplete: (transcription: string) =
   };
 };
 
-const Recorder = ({ onResponse, startRecording }: { onResponse: (response: string, transcription: string) => void, startRecording: boolean }) => {
+const Recorder = ({ 
+  onResponse, 
+  startRecording, 
+  onAdditionalData 
+}: { 
+  onResponse: (response: string, transcription: string) => void, 
+  startRecording: boolean,
+  onAdditionalData: (key: string, value: string) => void
+}) => {
   const { isListening, startListening, stopListening, hasRecognitionSupport } = useSpeechRecognition(handleSubmit);
 
-  const username = 'admin_function'; 
-  const password = 'adminpassword_function'; 
+  const username = 'isaac_test_3'; 
+  const password = 'isaac_test_3'; 
 
   useEffect(() => {
     if (startRecording) {
@@ -85,12 +93,19 @@ const Recorder = ({ onResponse, startRecording }: { onResponse: (response: strin
         input: transcription,
       });
   
-      const response = result.data.output;
-      onResponse(response, transcription);
-      stopListening(); // Add this line to stop listening after sending the response
+      const responseData = result.data;
+      
+      if (responseData.additional_data) {
+        const key = Object.keys(responseData.additional_data)[0];
+        const value = responseData.additional_data[key];
+        onAdditionalData(key, value);
+      }
+
+      onResponse(responseData.output, transcription);
+      stopListening();
     } catch (error) {
       console.error('Error sending text to backend:', error);
-      stopListening(); // Also stop listening in case of an error
+      stopListening();
     }
   }
 
