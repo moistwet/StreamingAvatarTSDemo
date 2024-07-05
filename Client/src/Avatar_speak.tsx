@@ -22,7 +22,7 @@ const AvatarSpeak: React.FC<AvatarSpeakProps> = ({ textToSpeak, onAvatarStop,onA
 
   async function fetchAccessToken() {
     try {
-      const response = await fetch('http://localhost:3001/get-access-token', {
+      const response = await fetch('http://192.168.2.223:3001/get-access-token', {
         method: 'POST'
       });
       const result = await response.json();

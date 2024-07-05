@@ -8,31 +8,28 @@ import './App.css';
 function App() {
   const [chatGPTText, setChatGPTText] = useState<string>("");
   const [recording, setRecording] = useState(false);
-  const [apiResponse, setApiResponse] = useState('');
   const [transcribedText, setTranscribedText] = useState('');
   const [chatHistory, setChatHistory] = useState<{ transcription: string, response: string }[]>([]);
   const [status, setStatus] = useState<'idle' | 'listening' | 'processing' | 'speaking'>('idle');
-  const [popupData, setPopupData] = useState<{ isVisible: boolean, key: string, value: string }>({
+  const [popupData, setPopupData] = useState<{ isVisible: boolean, payload: any }>({
     isVisible: false,
-    key: '',
-    value: ''
+    payload: null
   });
 
-  const handleApiResponse = (response: string, transcription: string) => {
-    setApiResponse(response);
-    setChatGPTText(response);
+  const handleApiResponse = (responseData: any, transcription: string) => {
+    setChatGPTText(responseData.output);
     setTranscribedText(transcription);
     setRecording(false);
     setStatus('processing');
   
     setChatHistory(prevHistory => [
       ...prevHistory,
-      { transcription, response }
+      { transcription, response: responseData.output }
     ]);
-  };
 
-  const handleAdditionalData = (key: string, value: string) => {
-    setPopupData({ isVisible: true, key, value });
+    if (responseData.additional_data) {
+      setPopupData({ isVisible: true, payload: responseData });
+    }
   };
 
   const handleAvatarStop = () => {
@@ -53,7 +50,6 @@ function App() {
           <Recorder 
             onResponse={handleApiResponse} 
             startRecording={recording} 
-            onAdditionalData={handleAdditionalData}
           />
         </div>
         
@@ -71,8 +67,7 @@ function App() {
       </div>
       <Popup 
         isVisible={popupData.isVisible}
-        dataKey={popupData.key}
-        dataValue={popupData.value}
+        payload={popupData.payload}
       />
     </div>
   );

@@ -63,19 +63,21 @@ const useSpeechRecognition = (onTranscriptionComplete: (transcription: string) =
   };
 };
 
+
+
+// ... (previous code for speech recognition remains the same)
+
 const Recorder = ({ 
   onResponse, 
-  startRecording, 
-  onAdditionalData 
+  startRecording 
 }: { 
-  onResponse: (response: string, transcription: string) => void, 
-  startRecording: boolean,
-  onAdditionalData: (key: string, value: string) => void
+  onResponse: (responseData: any, transcription: string) => void, 
+  startRecording: boolean
 }) => {
   const { isListening, startListening, stopListening, hasRecognitionSupport } = useSpeechRecognition(handleSubmit);
 
-  const username = 'isaac_test_3'; 
-  const password = 'isaac_test_3'; 
+  const username = 'test6'; 
+  const password = 'test6'; 
 
   useEffect(() => {
     if (startRecording) {
@@ -87,7 +89,7 @@ const Recorder = ({
 
   async function handleSubmit(transcription: string) {
     try {
-      const result = await axios.post('http://localhost:5000/query/text', {
+      const result = await axios.post('http://192.168.2.223:5000/query/text', {
         username,
         password,
         input: transcription,
@@ -95,13 +97,8 @@ const Recorder = ({
   
       const responseData = result.data;
       
-      if (responseData.additional_data) {
-        const key = Object.keys(responseData.additional_data)[0];
-        const value = responseData.additional_data[key];
-        onAdditionalData(key, value);
-      }
-
-      onResponse(responseData.output, transcription);
+      // Pass the entire response data to the onResponse callback
+      onResponse(responseData, transcription);
       stopListening();
     } catch (error) {
       console.error('Error sending text to backend:', error);

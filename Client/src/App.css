@@ -25,9 +25,10 @@
   position: relative;
   width: 100%;
   height: 0;
-  padding-bottom: 133.33%; /* This creates a 3:4 aspect ratio */
-  max-width: 75vh; /* This ensures the width doesn't exceed 75% of the viewport height */
-  max-height: 100vh;
+  padding-bottom: 56.25%; /* This creates a 16:9 aspect ratio */
+  max-width: 100vh; /* Adjusted to maintain aspect ratio */
+  max-height: 56.25vh; /* Adjusted to maintain aspect ratio */
+  
 }
 
 .avatar-container {
@@ -63,30 +64,70 @@
   z-index: 10;
 }
 
+/* ... (previous CSS remains the same) */
+/* ... (previous CSS remains the same) */
+
 .popup {
   position: absolute;
   bottom: 80px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.95);
   padding: 20px;
   border-radius: 15px;
   box-shadow: 0 0 20px rgba(0,0,0,0.2);
   z-index: 1000;
-  max-width: 80%;
-  text-align: center;
+  max-width: 90%;
+  width: 350px;
+  text-align: left;
+}
+
+.popup-item {
+  margin-bottom: 20px;
+}
+
+.popup-item:last-child {
+  margin-bottom: 0;
 }
 
 .popup h3 {
-  font-size: 1.5em;
+  font-size: 1.3em;
   margin-bottom: 10px;
   color: #333;
+  text-align: center;
 }
 
-.popup p {
-  font-size: 1.2em;
-  color: #666;
+.popup-table {
+  width: 100%;
+  border-collapse: collapse;
 }
+
+.popup-table th,
+.popup-table td {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.popup-table th {
+  font-weight: bold;
+  text-align: left;
+  width: 40%;
+  color: #555;
+}
+
+.popup-table td {
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .popup {
+    width: 90%;
+    max-width: none;
+  }
+}
+
+/* ... (rest of the CSS remains the same) */
+/* ... (rest of the CSS remains the same) */
 
 @media (max-width: 768px) {
   .MediaPlayer {
