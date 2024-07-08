@@ -55,8 +55,15 @@ const TransferInfo: React.FC<{ data: any }> = ({ data }) => (
   </table>
 );
 
+
+
 const Popup: React.FC<PopupProps> = ({ isVisible, payload }) => {
-  if (!isVisible || !payload || !payload.additional_data) return null;
+  console.log('Popup props:', { isVisible, payload }); // Add this line for debugging
+
+  if (!isVisible || !payload || !payload.additional_data) {
+    console.log('Popup not visible or no data'); // Add this line for debugging
+    return null;
+  }
 
   const additionalData = payload.additional_data;
 

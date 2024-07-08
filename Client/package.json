@@ -5,6 +5,7 @@
   "dependencies": {
     "@ffmpeg/core": "^0.12.6",
     "@ffmpeg/ffmpeg": "^0.12.10",
+    "@fortawesome/fontawesome-free": "^6.5.2",
     "@heygen/streaming-avatar": "^1.0.9",
     "@types/dom-speech-recognition": "^0.0.4",
     "@types/node": "^16.18.96",

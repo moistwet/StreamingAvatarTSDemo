@@ -28,7 +28,10 @@ function App() {
     ]);
 
     if (responseData.additional_data) {
+      console.log('Setting popup data:', responseData); // Add this line for debugging
       setPopupData({ isVisible: true, payload: responseData });
+    } else {
+      setPopupData({ isVisible: false, payload: null });
     }
   };
 
@@ -45,6 +48,10 @@ function App() {
 
   return (
     <div className="HeyGenStreamingAvatar">
+      <Popup 
+        isVisible={popupData.isVisible}
+        payload={popupData.payload}
+      />
       <header className="App-header">
         <div className="Actions">
           <Recorder 
@@ -65,10 +72,7 @@ function App() {
       <div>
         <ChatHistory chats={chatHistory} />
       </div>
-      <Popup 
-        isVisible={popupData.isVisible}
-        payload={popupData.payload}
-      />
+      
     </div>
   );
 }

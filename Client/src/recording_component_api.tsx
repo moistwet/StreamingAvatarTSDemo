@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import './App.css';
 // Speech Recognition Hook
 let recognition: SpeechRecognition | null = null;
 if ("webkitSpeechRecognition" in window) {
@@ -65,7 +65,7 @@ const useSpeechRecognition = (onTranscriptionComplete: (transcription: string) =
 
 
 
-// ... (previous code for speech recognition remains the same)
+// ... (keep your existing speech recognition code) ...
 
 const Recorder = ({ 
   onResponse, 
@@ -76,8 +76,8 @@ const Recorder = ({
 }) => {
   const { isListening, startListening, stopListening, hasRecognitionSupport } = useSpeechRecognition(handleSubmit);
 
-  const username = 'test6'; 
-  const password = 'test6'; 
+  const username = 'test1000'; 
+  const password = 'test1000'; 
 
   useEffect(() => {
     if (startRecording) {
@@ -89,7 +89,7 @@ const Recorder = ({
 
   async function handleSubmit(transcription: string) {
     try {
-      const result = await axios.post('http://192.168.2.223:5000/query/text', {
+      const result = await axios.post('http://localhost:5000/query/text', {
         username,
         password,
         input: transcription,
@@ -97,7 +97,6 @@ const Recorder = ({
   
       const responseData = result.data;
       
-      // Pass the entire response data to the onResponse callback
       onResponse(responseData, transcription);
       stopListening();
     } catch (error) {
@@ -109,8 +108,12 @@ const Recorder = ({
   return (
     <div>
       {hasRecognitionSupport ? (
-        <button onClick={isListening ? stopListening : startListening}>
-          {isListening ? 'Stop Recording' : 'Start Recording'}
+        <button 
+          className={`round-button ${isListening ? 'listening' : ''}`}
+          onClick={isListening ? stopListening : startListening}
+          aria-label={isListening ? 'Stop listening' : 'Start listening'}
+        >
+          <i className={`fas ${isListening ? 'fa-stop' : 'fa-microphone'}`}></i>
         </button>
       ) : (
         <div>Your browser does not support speech recognition.</div>
