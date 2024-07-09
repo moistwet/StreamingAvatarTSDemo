@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './Popup.css';
 interface PopupProps {
   isVisible: boolean;
   payload: any;
