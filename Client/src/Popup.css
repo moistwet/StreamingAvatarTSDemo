@@ -1,66 +1,89 @@
-/* Popup.css */
-
 .popup {
     position: fixed;
-    bottom: 130px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: rgba(255, 255, 255, 0.95);
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    max-width: 90%;
-    width: 350px;
-    text-align: left;
+    bottom: 0;
+    left: 0;
+    right: 0;
     display: flex;
     flex-direction: column;
-    height: 317px;
+    min-height: 317px;
+    padding: 60px 30px 20px 30px;
+    border-radius: 26px 26px 0px 0px;
+    background: #FFF;
+    box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.1);
+    transform: translateY(100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000; /* Ensure it's above other elements */
   }
   
-  .popup-item {
-    margin-bottom: 20px;
+  .popup.visible {
+    transform: translateY(0);
   }
   
-  .popup-item:last-child {
-    margin-bottom: 0;
+  .popup-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
   }
   
-  .popup h3 {
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 10px;
-    color: var(--text-color);
+  .popup-username {
+    color: #39474E;
     text-align: center;
+    font-family: "Open Sans", sans-serif;
+    font-size: 15px;
+    font-weight: 700;
   }
   
-  .popup-table {
+  .popup-account-name {
+    color: rgba(57, 71, 78, 0.85);
+    text-align: center;
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  
+  .popup-balance-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
-    border-collapse: collapse;
   }
   
-  .popup-table th,
-  .popup-table td {
-    padding: 8px;
-    border-bottom: 1px solid var(--border-color);
+  .popup-balance-currency {
+    color: rgba(57, 71, 78, 0.85);
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+    font-weight: 400;
   }
   
-  .popup-table th {
+  .popup-balance-amount {
+    width: 262px;
+    color: #39474E;
+    text-align: center;
+    font-family: "Open Sans", sans-serif;
+    font-size: 28px;
     font-weight: 600;
-    text-align: left;
-    width: 40%;
-    color: var(--secondary-text-color);
+    border-bottom: 1px solid rgba(57, 71, 78, 0.3);
+    padding-bottom: 5px;
   }
   
-  .popup-table td {
-    text-align: right;
-    color: var(--text-color);
-  }
-  
-  @media (max-width: 768px) {
-    .popup {
-      width: 90%;
-      max-width: none;
-      bottom: 110px;
-    }
+  .popup-cancel-button {
+    display: flex;
+    min-width: 100px;
+    padding: 10px 22px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    align-self: stretch;
+    border-radius: 4px;
+    background: #495A63;
+    color: #FFF;
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.20), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+    margin-top: 20px;
   }

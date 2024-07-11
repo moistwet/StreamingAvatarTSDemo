@@ -3,6 +3,7 @@ import Recorder from './recording_component_api';
 import ChatHistory from './chat_history';
 import AvatarSpeak from './Avatar_speak';
 import Popup from './Popup';
+import LogoutButton from './components/LogoutButton';
 import './App.css';
 
 function App() {
@@ -28,7 +29,6 @@ function App() {
     ]);
 
     if (responseData.additional_data) {
-      console.log('Setting popup data:', responseData); // Add this line for debugging
       setPopupData({ isVisible: true, payload: responseData });
     } else {
       setPopupData({ isVisible: false, payload: null });
@@ -39,18 +39,23 @@ function App() {
     console.log('Avatar stopped speaking');
     setRecording(true);
     setStatus('listening');
-    setPopupData(prev => ({ ...prev, isVisible: false }));
   };
   
   const handleAvatarStart = () => {
     setStatus('speaking');
   };
 
+  const closePopup = () => {
+    setPopupData({ isVisible: false, payload: null });
+  };
+
   return (
     <div className="HeyGenStreamingAvatar">
+      <div className="inner">
       <Popup 
         isVisible={popupData.isVisible}
         payload={popupData.payload}
+        onClose={closePopup}
       />
       <header className="App-header">
         <div className="Actions">
@@ -68,11 +73,14 @@ function App() {
           />
         </div>
         
+        <div className="logout-container">
+          <LogoutButton />
+        </div>
       </header>
       <div>
         <ChatHistory chats={chatHistory} />
       </div>
-      
+      </div>
     </div>
   );
 }

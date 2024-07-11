@@ -89,7 +89,7 @@ const Recorder = ({
 
   async function handleSubmit(transcription: string) {
     try {
-      const result = await axios.post('http://localhost:5000/query/text', {
+      const result = await axios.post('http://192.168.0.166:5000/query/text', {
         username,
         password,
         input: transcription,

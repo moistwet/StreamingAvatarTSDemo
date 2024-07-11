@@ -1,86 +1,66 @@
+
+
+
 import React from 'react';
 import './Popup.css';
+
 interface PopupProps {
   isVisible: boolean;
   payload: any;
+  onClose: () => void;
 }
 
 const BalanceInfo: React.FC<{ data: any }> = ({ data }) => (
-  <table className="popup-table">
-    <tbody>
-      <tr>
-        <th>Account Name</th>
-        <td>{data.accountName}</td>
-      </tr>
-      <tr>
-        <th>Balance</th>
-        <td>${data.balance.toFixed(2)}</td>
-      </tr>
-      <tr>
-        <th>Username</th>
-        <td>{data.username}</td>
-      </tr>
-    </tbody>
-  </table>
+  <div className="popup-content">
+    <div className="popup-username">{data.username}</div>
+    <div className="popup-account-name">{data.accountName}</div>
+    <div className="popup-balance-container">
+      <div className="popup-balance-currency">SGD</div>
+      <div className="popup-balance-amount">{data.balance.toFixed(2)}</div>
+    </div>
+  </div>
 );
+
 
 const TransferInfo: React.FC<{ data: any }> = ({ data }) => (
-  <table className="popup-table">
-    <tbody>
-      <tr>
-        <th>Amount</th>
-        <td>${data.amount.toFixed(2)}</td>
-      </tr>
-      <tr>
-        <th>From</th>
-        <td>{data.debitedAccountName}</td>
-      </tr>
-      <tr>
-        <th>To</th>
-        <td>{data.creditedAccountName}</td>
-      </tr>
-      <tr>
-        <th>Receiver</th>
-        <td>{data.receiverUsername}</td>
-      </tr>
-      <tr>
-        <th>New Balance</th>
-        <td>${data.newBalance.toFixed(2)}</td>
-      </tr>
-      <tr>
-        <th>Sender</th>
-        <td>{data.username}</td>
-      </tr>
-    </tbody>
-  </table>
+  <div className="popup-content">
+    <div className="popup-username">{data.username}</div>
+    <div className="popup-account-name">Transfer Details</div>
+    <div className="popup-transfer-details">
+      <div>Amount: ${data.amount.toFixed(2)}</div>
+      <div>From: {data.debitedAccountName}</div>
+      <div>To: {data.creditedAccountName}</div>
+      <div>Receiver: {data.receiverUsername}</div>
+      <div>New Balance: ${data.newBalance.toFixed(2)}</div>
+    </div>
+  </div>
 );
 
-
-
-const Popup: React.FC<PopupProps> = ({ isVisible, payload }) => {
-  console.log('Popup props:', { isVisible, payload }); // Add this line for debugging
+const Popup: React.FC<PopupProps> = ({ isVisible, payload, onClose }) => {
+  console.log('Popup props:', { isVisible, payload });
 
   if (!isVisible || !payload || !payload.additional_data) {
-    console.log('Popup not visible or no data'); // Add this line for debugging
+    console.log('Popup not visible or no data');
     return null;
   }
 
   const additionalData = payload.additional_data;
 
+  const renderContent = () => {
+    if (additionalData.get_balance) {
+      return <BalanceInfo data={additionalData.get_balance} />;
+    } else if (additionalData.transfer_funds) {
+      // Implement TransferInfo component if needed
+      return <div>Transfer Info (Not implemented)</div>;
+    } else {
+      return <div>Unsupported operation</div>;
+    }
+  };
+
   return (
-    <div className="popup">
-      {additionalData.get_balance && (
-        <div className="popup-item">
-          <h3>Account Balance</h3>
-          <BalanceInfo data={additionalData.get_balance} />
-        </div>
-      )}
-      {additionalData.transfer_funds && (
-        <div className="popup-item">
-          <h3>Transfer Details</h3>
-          <TransferInfo data={additionalData.transfer_funds} />
-        </div>
-      )}
+    <div className={`popup ${isVisible ? 'visible' : ''}`}>
+      {renderContent()}
+      <button className="popup-cancel-button" onClick={onClose}>Cancel</button>
     </div>
   );
 };
