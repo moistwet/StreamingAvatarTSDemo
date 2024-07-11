@@ -3,7 +3,7 @@ import { Configuration, NewSessionData, StreamingAvatarApi } from '@heygen/strea
 import './App.css'
 
 const avatarId = "josh_lite3_20230714";
-const voiceId = "52b62505407d4f369b9924c2afcdfe72";
+const voiceId = "fd26a72bd7724dbea95e4ad5db3a78bc";
 
 interface AvatarSpeakProps {
   textToSpeak: string;
@@ -22,7 +22,7 @@ const AvatarSpeak: React.FC<AvatarSpeakProps> = ({ textToSpeak, onAvatarStop,onA
 
   async function fetchAccessToken() {
     try {
-      const response = await fetch('http://192.168.0.166:3001/get-access-token', {
+      const response = await fetch('http://localhost:3001/get-access-token', {
         method: 'POST'
       });
       const result = await response.json();
